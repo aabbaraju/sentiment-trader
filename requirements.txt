@@ -1,0 +1,9 @@
+gradio
+yfinance
+vaderSentiment
+transformers
+praw
+requests
+pandas
+matplotlib
+scikit-learn
