@@ -1,6 +1,23 @@
+import os
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+API_KEY = os.getenv("NEWS_API_KEY")
 def get_news(ticker):
-    return [
-        f"{ticker} stock surges after strong earnings.",
-        f"Investors unsure about {ticker}'s future",
-        f"{ticker} facing regulatory issues in Europe"
-    ]
+    url = (
+        f"https://newsapi.org/v2/everything?"
+        f"q={ticker}&"
+        f"language=en&"
+        f"sortBy=publishedAt&"
+        f"apiKey={API_KEY}"
+    )
+    response = requests.get(url)
+    data = response.json()
+
+    if "articles" not in data:
+        return ["Error: No news"]
+    articles = data["articles"][:5]
+    headlines = [article["title"] for article in articles]
+    
+    return headlines
