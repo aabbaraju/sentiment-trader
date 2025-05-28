@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 API_KEY = os.getenv("NEWS_API_KEY")
+
 def get_news(ticker):
     url = (
         f"https://newsapi.org/v2/everything?"
@@ -16,8 +17,5 @@ def get_news(ticker):
     data = response.json()
 
     if "articles" not in data:
-        return ["Error: No news"]
-    articles = data["articles"][:5]
-    headlines = [article["title"] for article in articles]
-    
-    return headlines
+        return []
+    return [(article["title"], article["url"]) for article in data["articles"][:5]]
